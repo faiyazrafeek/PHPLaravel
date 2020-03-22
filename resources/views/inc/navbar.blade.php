@@ -26,13 +26,13 @@
             <a class="nav-link" href="posts/create">Create Post</a>
         </li>
         </ul>
-      </div>  
+      </div>
 
       </div>
     </nav>
 -->
 
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #DD4B39;">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -56,7 +56,7 @@
                       <li class="nav-item">
                         <a class="nav-link" href="/posts">Blog</a>
                       </li>
-                    </ul>                    
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -72,14 +72,14 @@
                             @endif
                         @else
                         <li class="nav-item float-left">
-                             
+
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <!--<a class="nav-link" href="posts/create">Create Post</a>-->
-                                
+
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/home">Home</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -87,14 +87,14 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
-                            
+
                         @endguest
                     </ul>
                 </div>

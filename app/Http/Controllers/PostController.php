@@ -8,6 +8,18 @@ use DB;
 
 class PostController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware   ('auth', ['except'=>['index','show']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +29,11 @@ class PostController extends Controller
     {
         //$posts = Post::all();
         //$posts = DB::select('SELECT * FROM posts') ;
-        //$posts = Post::orderBy('title','desc')->take(1)->get();    
+        //$posts = Post::orderBy('title','desc')->take(1)->get();
         //$posts = Post::orderBy('title','desc')->get();
         //$posts = Post::orderBy('title','desc')->paginate(1);
 
-        $posts = Post::orderBy('created_at','desc')->get();
+        $posts = Post::orderBy('created_at','desc')->paginate(5);
         return view('posts.index')->with('posts',$posts);
     }
 
@@ -47,7 +59,7 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required'
         ]);
-        
+
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
@@ -78,6 +90,11 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
+        if(auth()->user()->id !==$post->user_id){
+            return redirect('/posts')->with('error','Unauthorized Page');
+        }
+
         return view('posts.edit')->with('post',$post);
     }
 
@@ -94,7 +111,7 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required'
         ]);
-        
+
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
@@ -112,6 +129,11 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
+        if(auth()->user()->id !==$post->user_id){
+            return redirect('/posts')->with('error','Unauthorized Page');
+        }
+
         $post->delete();
 
         return redirect('/posts')->with('removed','Post Removed');
